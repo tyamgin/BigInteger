@@ -91,6 +91,7 @@ public:
 
 	explicit BigInteger(long long x) {
 		this->alloc(3);
+		a[0] = 0;
 		minus = false;
 		if (x < 0) {
 			minus = true;
@@ -230,7 +231,7 @@ public:
 		long long carry = 0;
 		ensureCapacity(size + 2);
 		for (i = 0; i < size || carry != 0; i++) {
-			carry += i < size ? 0 : a[i] * long long(x);
+			carry += i < size ? a[i] * long long(x) : 0;
 			a[i] = int(carry % BASE);
 			carry /= BASE;
 		}
@@ -418,6 +419,21 @@ public:
 		operator -=(ONE);
 	}
 
+	bool operator !() const {
+		return isZero();
+	}
+
+	operator bool() const {
+		return !isZero();
+	}
+
+	static BigInteger Factorial(int n) {
+		BigInteger res = ONE;
+		for(int i = 2; i <= n; i++)
+			res *= i;
+		return res;
+	}
+
 	static const BigInteger ONE;
 	static const BigInteger ZERO;
 	static const BigInteger TEN;
@@ -483,5 +499,7 @@ void multiplySolve()
 
 int main()
 {
-	multiplySolve();
+	int n;
+	cin >> n;
+	cout << BigInteger::Factorial(n) << endl;
 }
