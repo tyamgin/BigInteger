@@ -427,6 +427,10 @@ public:
 		return !isZero();
 	}
 
+	operator std::string() const {
+		return toString();
+	}
+
 	static BigInteger Factorial(int n) {
 		BigInteger res = ONE;
 		for(int i = 2; i <= n; i++)
@@ -499,7 +503,9 @@ void multiplySolve()
 
 int main()
 {
-	int n;
-	cin >> n;
-	cout << BigInteger::Factorial(n) << endl;
+	BigInteger a;
+	cin >> a;
+	string s = "123";
+	s += a;
+	cout << s << endl;
 }

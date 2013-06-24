@@ -1,9 +1,9 @@
-﻿Build started 24.06.2013 17:45:40.
+﻿Build started 24.06.2013 17:53:13.
 Project "D:\BigInteger\BigInteger\BigInteger.vcxproj" on node 2 (Build target(s)).
 ClCompile:
   C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt BigInteger.cpp
   BigInteger.cpp
-BigInteger.cpp(442): warning C4099: 'std::pair<_Ty1,_Ty2>' : type name first seen using 'struct' now seen using 'class'
+BigInteger.cpp(446): warning C4099: 'std::pair<_Ty1,_Ty2>' : type name first seen using 'struct' now seen using 'class'
           with
           [
               _Ty1=BigInteger,
@@ -22,4 +22,4 @@ Done Building Project "D:\BigInteger\BigInteger\BigInteger.vcxproj" (Build targe
 
 Build succeeded.
 
-Time Elapsed 00:00:08.83
+Time Elapsed 00:00:07.18
