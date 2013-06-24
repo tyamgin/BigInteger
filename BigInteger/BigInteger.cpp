@@ -2,6 +2,9 @@
 #include <string.h>
 #include <algorithm>
 #include <iostream>
+#include <vector>
+#include <math.h>
+#include <stdio.h>
 
 /*
 
@@ -17,7 +20,191 @@
 	http://www.e-olimp.com/problems/2618 A+1    0 <= A <= 1e6
 	http://www.e-olimp.com/problems/1328
 	http://www.e-olimp.com/problems/2625 BigDecimal
+	http://pastebin.com/jDZ9zF48
 */
+
+#define FFT_ENABLED 1
+
+#if FFT_ENABLED
+
+// *****************************************************************<fft>******************************************************************************************** //
+
+namespace FFT
+{
+    #define MULT_REAL(a, b, c, d) ((a)*(c) - (b)*(d))
+    #define MULT_IMAG(a, b, c, d) ((a)*(d) + (b)*(c))
+	#define FFT_DIGITS 5
+	const double Pi = acos(-1.0);
+
+	int cap = 1;
+	double *Real[2] = {new double[cap], new double[cap]};
+	double *Imag[2] = {new double[cap], new double[cap]};
+	double *w[2] = {new double[cap], new double[cap]};
+    int *rev = new int[cap];
+
+    void fft(double *real, double *imag, int n)
+    {
+        int logn = 0, i;
+        while((1 << logn) < n)
+            logn++;
+        rev[0] = 0;
+        for(int i = 1; i < (1 << logn); i++)
+            rev[i] = rev[i / 2] / 2 + (  (i & 1) << (logn - 1)  );
+    
+        for(i = 0; i < n; i++)
+        {
+            w[0][i] = cos(2 * Pi * i / n);
+            w[1][i] = sin(2 * Pi * i / n);
+        }
+        for(i = 0; i < n; i++)
+        {
+            if (i < rev[i])
+            {
+                std::swap(real[i], real[rev[i]]);
+                std::swap(imag[i], imag[rev[i]]);
+            }
+        }
+    
+        for(int k = 2; k <= n; k *= 2)
+        {
+            int shift = k / 2;
+            int blocks = n / k;
+            for(int block = 0; block < n; block += k)
+            {
+                int idx = block * blocks % n;
+				double *re = real + block;
+				double *im = imag + block;
+				double *re_end = re + shift;
+				double *im_end = im + shift;
+				double *re_next = re_end;
+				double *im_next = im_end;
+				double *w0_ptr = w[0] + idx;
+				double *w1_ptr = w[1] + idx;
+				double *w0_end = w[0] + n;
+                for(; re != re_end; re++, re_next++, im++, im_next++)
+                {
+                    double uR = *re, uI = *im;
+                    double vR = MULT_REAL(*w0_ptr, *w1_ptr, *re_next, *im_next);
+                    double vI = MULT_IMAG(*w0_ptr, *w1_ptr, *re_next, *im_next);
+                    *re = uR + vR;
+                    *im = uI + vI;
+                    *re_next = uR - vR;
+                    *im_next = uI - vI;
+                    idx += blocks;
+					w0_ptr += blocks;
+					w1_ptr += blocks;
+					if (w0_ptr >= w0_end)
+					{
+						w0_ptr -= n;
+						w1_ptr -= n;
+					}
+                }
+            }
+        }
+    }
+
+    void invert_fft(double *real, double *imag, int n)
+    {
+        fft(real, imag, n);
+        for(int i = 0; i < n; i++)
+        {
+            real[i] /= n;
+            imag[i] /= n;
+        }
+        std::reverse(real + 1, real + n);
+        std::reverse(imag + 1, imag + n);
+    }
+
+	int parseInt(const char *a, int len)
+	{
+		int res = 0;
+		for(int i = 0; i < len; i++)
+			res = res * 10 + a[i] - '0';
+		return res;
+	}
+
+	void getDtf(double *Real, double *Imag, const char *a, int len, int n)
+	{
+		int i, pos;
+		for(i = len - FFT_DIGITS, pos = 0; i >= 0; i -= FFT_DIGITS, pos++)
+		{
+			Real[pos] = parseInt(a + i, FFT_DIGITS);
+			Imag[pos] = 0;
+		}
+		if (i + FFT_DIGITS != 0)
+		{
+			Real[pos] = parseInt(a, i + FFT_DIGITS);
+			Imag[pos] = 0;
+			pos++;
+		}
+		std::fill(Real + pos, Real + n, 0.0);
+		std::fill(Imag + pos, Imag + n, 0.0);
+		fft(Real, Imag, n);
+	}
+
+	std::string multiply_solve(const char *str1, int len1, const char *str2, int len2, bool negative)
+	{
+		int i;
+		int n = std::max((len1 + FFT_DIGITS - 1) / FFT_DIGITS, (len2 + FFT_DIGITS - 1) / FFT_DIGITS);
+		while(n & (n - 1))
+			n++;
+		n *= 2;
+		if (cap < n)
+		{
+			cap = n * 2;
+			for(i = 0; i < 2; i++)
+			{
+				Real[i] = (double*)realloc(Real[i], cap * sizeof(double));
+				Imag[i] = (double*)realloc(Imag[i], cap * sizeof(double));
+				w[i] = (double*)realloc(w[i], cap * sizeof(double));
+			}
+			rev = (int*)realloc(rev, cap * sizeof(int));
+		}
+		int pow10 = 1;
+		for(i = 0; i < FFT_DIGITS; i++)
+			pow10 *= 10;
+		getDtf(Real[0], Imag[0], str1, len1, n);
+		getDtf(Real[1], Imag[1], str2, len2, n);
+		for(i = 0; i < n; i++)
+		{
+			double re = MULT_REAL(Real[0][i], Imag[0][i], Real[1][i], Imag[1][i]);
+			double im = MULT_IMAG(Real[0][i], Imag[0][i], Real[1][i], Imag[1][i]);
+			Real[0][i] = re;
+			Imag[0][i] = im;
+		}
+		invert_fft(Real[0], Imag[0], n);
+		std::vector<long long> res(n);
+		for(i = 0; i < n; i++)
+			res[i] = Real[0][i] + 0.5; // Округление
+    
+		for(i = 0; i < n - 1; i++)
+		{
+			res[i + 1] += res[i] / pow10;
+			res[i] %= pow10;
+		}
+		for(i = n - 1; i > 0 && res[i] == 0; i--);
+
+		char fmt[] = "%0*d";
+		char buf[20];
+		fmt[2] = FFT_DIGITS + '0';
+		std::string result;
+		if (!(i == 0 && res[0] == 0))
+			if (negative)
+				result += "-";
+		sprintf(buf, "%d", (int)res[i--]);
+		result += buf;
+		for( ; i >= 0; i--)
+		{
+			sprintf(buf, fmt, (int)res[i]);
+			result += buf;
+		}
+		return result;
+	}
+}
+
+// ****************************************************************</fft>******************************************************************************************** //
+
+#endif;
 
 // **************************************************************<BigInteger>**************************************************************************************** //
 
@@ -29,7 +216,7 @@ class BigInteger
 	bool minus;
 
 	static const int BASE;
-	static const int BASE_DIGITS;
+	static const int BASE_FFT_DIGITS;
 
 	void reduce() {
 		while(size > 1 && a[size - 1] == 0)
@@ -73,16 +260,16 @@ public:
 	}
 
 	explicit BigInteger(const std::string& s) {
-		this->alloc(s.size() / BASE_DIGITS + 1);
+		this->alloc(s.size() / BASE_FFT_DIGITS + 1);
 		size = 0;
 		minus = s[0] == '-';
 		int lf = int(minus);
 		if (s[0] == '+')
 			lf = 1;
 
-		for(int i = (int)s.size() - 1; i >= lf; i -= BASE_DIGITS) {
+		for(int i = (int)s.size() - 1; i >= lf; i -= BASE_FFT_DIGITS) {
 			int digit = 0;
-			for(int j = std::max(lf, i - BASE_DIGITS + 1); j <= i; j++)
+			for(int j = std::max(lf, i - BASE_FFT_DIGITS + 1); j <= i; j++)
 				digit = digit * 10 + s[j] - '0';
 			a[size++] = digit;
 		}
@@ -126,7 +313,7 @@ public:
 		sprintf(buf, "%d", a[size - 1]);
 		std::string res(buf);
 		char fmt[] = "%0*d";
-		fmt[2] = BASE_DIGITS + '0';
+		fmt[2] = BASE_FFT_DIGITS + '0';
 		for(int i = size - 2; i >= 0; i--) {
 			sprintf(buf, fmt, a[i]);
 			res += buf;
@@ -231,7 +418,7 @@ public:
 		long long carry = 0;
 		ensureCapacity(size + 2);
 		for (i = 0; i < size || carry != 0; i++) {
-			carry += i < size ? a[i] * long long(x) : 0;
+			carry += i < size ? a[i] * (long long)(x) : 0;
 			a[i] = int(carry % BASE);
 			carry /= BASE;
 		}
@@ -266,13 +453,21 @@ public:
 		}
 		int carry = 0;
 		for(int i = size - 1; i >= 0; i--)
-			carry = (carry * long long(BASE) + a[i]) % x;
+			carry = (carry * (long long)(BASE) + a[i]) % x;
 		if (minus && carry != 0)
 			carry = x - carry;
 		return carry;
 	}
 
 	BigInteger operator *(const BigInteger& b) const {
+#if FFT_ENABLED
+		int maxSize = std::max(size, b.size);
+		if (maxSize > 50 && (double)size * b.size / 5 > maxSize * log(maxSize + 0.0)) {
+			std::string str1 = toString(), str2 = b.toString();
+			std::string result = FFT::multiply_solve(str1.c_str(), str1.size(), str2.c_str(), str2.size(), minus ^ b.minus);
+			return BigInteger(result);
+		}
+#endif;
 	    BigInteger res;
 		res.ensureCapacity(size + b.size + 1);
 		memset(res.a, 0, (size + b.size + 1) * sizeof(int));
@@ -281,7 +476,7 @@ public:
 			int j;
 			long long carry = 0;
 			for(j = 0; j < b.size || carry != 0; j++) {
-				carry += res.a[i + j] + (j < b.size ? a[i] * long long(b.a[j]) : 0);
+				carry += res.a[i + j] + (j < b.size ? a[i] * (long long)b.a[j] : 0);
 				res.a[i + j] = int(carry % BASE);
 				carry /= BASE;
 			}
@@ -316,7 +511,7 @@ public:
 		res.ensureCapacity(size);
 		bool res_minus = a.minus ^ b.minus;
 		a.minus = b.minus = false;
-		int diff = std::max(0, (a.size - b.size - 1) * BASE_DIGITS);
+		int diff = std::max(0, (a.size - b.size - 1) * BASE_FFT_DIGITS);
 		BigInteger pw10("1" + std::string(diff, '0'));
 		b *= pw10;
 		while (b <= a) {
@@ -431,11 +626,18 @@ public:
 		return toString();
 	}
 
+	static BigInteger Multiply(int *a, int n) {
+		if (n == 1)
+			return BigInteger(a[0]);
+		int mid = n / 2;
+		return Multiply(a, mid) * Multiply(a + mid, n - mid);
+	}
+
 	static BigInteger Factorial(int n) {
-		BigInteger res = ONE;
-		for(int i = 2; i <= n; i++)
-			res *= i;
-		return res;
+		int *List = new int[n];
+		for(int i = 1; i <= n; i++)
+			List[i - 1] = i;
+		return Multiply(List, n);
 	}
 
 	static const BigInteger ONE;
@@ -458,7 +660,7 @@ std::istream &operator >>(std::istream &in, BigInteger &p) {
 }
 
 const int BigInteger::BASE = (int)1e9;
-const int BigInteger::BASE_DIGITS = 9;
+const int BigInteger::BASE_FFT_DIGITS = 9;
 
 const BigInteger BigInteger::ONE = BigInteger(1LL);
 const BigInteger BigInteger::ZERO = BigInteger(0LL);
@@ -470,42 +672,27 @@ const BigInteger BigInteger::MINUS_ONE = BigInteger(-1LL);
 using namespace std;
 #include <time.h>
 
-//void divideIntTest()
-//{
-//	clock_t timer = clock();
-//	BigInteger a(string("1") + string(10000000, '0'));
-//	int b = 999999999;
-//	a /= b;
-//	cout << "/(int)" << " " << clock() - timer << "ms" << endl;
-//}
-//
-//void divideBigIntTest()
-//{
-//	clock_t timer = clock();
-//	BigInteger a(string("1") + string(10000000, '0'));
-//	BigInteger b(999999999);
-//	a /= b;
-//	cout << "/(int)" << " " << clock() - timer << "ms" << endl;
-//}
-//
-//int main()
-//{
-//	divideIntTest();
-//	divideBigIntTest();
-//}
-
 void multiplySolve()
 {
+	int tests;
+	cin >> tests;
 	BigInteger a, b;
-	cin >> a >> b;
-	cout << a * b << endl;
+	while(tests--)
+	{
+		cin >> a >> b;
+		cout << a * b << endl;
+	}
+}
+
+void factSolve()
+{
+	int n;
+	cin >> n;
+	cout << BigInteger::Factorial(n) << endl;
 }
 
 int main()
 {
-	BigInteger a;
-	cin >> a;
-	string s = "123";
-	s += a;
-	cout << s << endl;
+	//multiplySolve();
+	factSolve();
 }
