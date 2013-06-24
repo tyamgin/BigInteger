@@ -1,0 +1,25 @@
+﻿Build started 24.06.2013 15:18:45.
+Project "d:\BigInteger\BigInteger\BigInteger.vcxproj" on node 2 (Build target(s)).
+ClCompile:
+  C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt BigInteger.cpp
+  BigInteger.cpp
+BigInteger.cpp(402): warning C4099: 'std::pair<_Ty1,_Ty2>' : type name first seen using 'struct' now seen using 'class'
+          with
+          [
+              _Ty1=BigInteger,
+              _Ty2=BigInteger
+          ]
+BigInteger.cpp(121): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
+BigInteger.cpp(124): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
+Link:
+  C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"d:\BigInteger\Release\BigInteger.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"d:\BigInteger\Release\BigInteger.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"d:\BigInteger\Release\BigInteger.lib" /MACHINE:X86 /SAFESEH Release\BigInteger.obj
+  Generating code
+  Finished generating code
+  BigInteger.vcxproj -> d:\BigInteger\Release\BigInteger.exe
+Done Building Project "d:\BigInteger\BigInteger\BigInteger.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:09.01
