@@ -1,30 +1,67 @@
-﻿Build started 24.06.2013 20:46:32.
-Project "D:\BigInteger\BigInteger\BigInteger.vcxproj" on node 2 (Build target(s)).
+﻿Build started 31.07.2013 20:55:06.
+Project "D:\BigInteger\BigInteger\BigInteger.vcxproj" on node 2 (Rebuild target(s)).
 ClCompile:
-  C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt BigInteger.cpp
-  BigInteger.cpp
-BigInteger.cpp(178): warning C4244: '=' : conversion from 'double' to '__int64', possible loss of data
-BigInteger.cpp(194): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt BigInteger.h UnitTestcpp.cpp
+  BigInteger.h
+BigInteger.h(178): warning C4244: '=' : conversion from 'double' to '__int64', possible loss of data
+BigInteger.h(194): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
           C:\Program Files\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
-BigInteger.cpp(198): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+BigInteger.h(198): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
           C:\Program Files\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
-BigInteger.cpp(648): warning C4099: 'std::pair<_Ty1,_Ty2>' : type name first seen using 'struct' now seen using 'class'
+BigInteger.h(648): warning C4099: 'std::pair<_Ty1,_Ty2>' : type name first seen using 'struct' now seen using 'class'
           with
           [
               _Ty1=BigInteger,
               _Ty2=BigInteger
           ]
-BigInteger.cpp(313): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+BigInteger.h(313): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
           C:\Program Files\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
-BigInteger.cpp(318): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+BigInteger.h(318): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
+  UnitTestcpp.cpp
+d:\biginteger\biginteger\BigInteger.h(178): warning C4244: '=' : conversion from 'double' to '__int64', possible loss of data
+d:\biginteger\biginteger\BigInteger.h(194): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
+d:\biginteger\biginteger\BigInteger.h(198): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
+d:\biginteger\biginteger\BigInteger.h(648): warning C4099: 'std::pair<_Ty1,_Ty2>' : type name first seen using 'struct' now seen using 'class'
+          with
+          [
+              _Ty1=BigInteger,
+              _Ty2=BigInteger
+          ]
+d:\biginteger\biginteger\BigInteger.h(313): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+          C:\Program Files\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
+d:\biginteger\biginteger\BigInteger.h(318): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
           C:\Program Files\Microsoft Visual Studio 11.0\VC\include\stdio.h(357) : see declaration of 'sprintf'
 Link:
-  C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\BigInteger\Release\BigInteger.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\BigInteger\Release\BigInteger.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\BigInteger\Release\BigInteger.lib" /MACHINE:X86 /SAFESEH Release\BigInteger.obj
-  Generating code
-  Finished generating code
-  BigInteger.vcxproj -> D:\BigInteger\Release\BigInteger.exe
-Done Building Project "D:\BigInteger\BigInteger\BigInteger.vcxproj" (Build target(s)).
+  C:\Program Files\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\BigInteger\Release\BigInteger.dll" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\BigInteger\Release\BigInteger.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\BigInteger\Release\BigInteger.lib" /MACHINE:X86 /SAFESEH /DLL Release\BigInteger.obj
+  Release\UnitTestcpp.obj
+UnitTestcpp.obj : error LNK2005: "public: static class BigInteger const BigInteger::ZERO" (?ZERO@BigInteger@@2V1@B) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "private: static int const BigInteger::BASE" (?BASE@BigInteger@@0HB) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "int FFT::cap" (?cap@FFT@@3HA) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "double * * FFT::w" (?w@FFT@@3PAPANA) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "public: static class BigInteger const BigInteger::ONE" (?ONE@BigInteger@@2V1@B) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "int * FFT::rev" (?rev@FFT@@3PAHA) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "public: static class BigInteger const BigInteger::TEN" (?TEN@BigInteger@@2V1@B) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "double * * FFT::Imag" (?Imag@FFT@@3PAPANA) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "private: static int const BigInteger::BASE_FFT_DIGITS" (?BASE_FFT_DIGITS@BigInteger@@0HB) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "public: static class BigInteger const BigInteger::MINUS_ONE" (?MINUS_ONE@BigInteger@@2V1@B) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "double * * FFT::Real" (?Real@FFT@@3PAPANA) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: _main already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "void __cdecl factSolve(void)" (?factSolve@@YAXXZ) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "void __cdecl multiplySolve(void)" (?multiplySolve@@YAXXZ) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "class std::basic_istream<char,struct std::char_traits<char> > & __cdecl operator>>(class std::basic_istream<char,struct std::char_traits<char> > &,class BigInteger &)" (??5@YAAAV?$basic_istream@DU?$char_traits@D@std@@@std@@AAV01@AAVBigInteger@@@Z) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "class std::basic_ostream<char,struct std::char_traits<char> > & __cdecl operator<<(class std::basic_ostream<char,struct std::char_traits<char> > &,class BigInteger)" (??6@YAAAV?$basic_ostream@DU?$char_traits@D@std@@@std@@AAV01@VBigInteger@@@Z) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl FFT::multiply_solve(char const *,int,char const *,int,bool)" (?multiply_solve@FFT@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@PBDH0H_N@Z) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "void __cdecl FFT::getDtf(double *,double *,char const *,int,int)" (?getDtf@FFT@@YAXPAN0PBDHH@Z) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "int __cdecl FFT::parseInt(char const *,int)" (?parseInt@FFT@@YAHPBDH@Z) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "void __cdecl FFT::invert_fft(double *,double *,int)" (?invert_fft@FFT@@YAXPAN0H@Z) already defined in BigInteger.obj
+UnitTestcpp.obj : error LNK2005: "void __cdecl FFT::fft(double *,double *,int)" (?fft@FFT@@YAXPAN0H@Z) already defined in BigInteger.obj
+     Creating library D:\BigInteger\Release\BigInteger.lib and object D:\BigInteger\Release\BigInteger.exp
+D:\BigInteger\Release\BigInteger.dll : fatal error LNK1169: one or more multiply defined symbols found
+Done Building Project "D:\BigInteger\BigInteger\BigInteger.vcxproj" (Rebuild target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:10.21
+Time Elapsed 00:00:10.74
